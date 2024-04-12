@@ -1,0 +1,18 @@
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
+import seaborn as sns
+import matplotlib.pyplot as plt
+actual = ['orange','apple', 'apple', 'orange', 'apple', 'apple', 'orange', 'apple', 'apple', 'orange']
+predicted = ['apple', 'apple', 'apple', 'orange', 'apple', 'apple', 'orange', 'orange', 'orange', 'orange']
+results = confusion_matrix(actual, predicted)
+print ('Confusion Matrix :')
+print(results)
+print ('Accuracy Score :',accuracy_score(actual, predicted))
+print('Classification Report : ')
+print (classification_report(actual, predicted))
+sns.heatmap(results,  annot=True,fmt='g', xticklabels=['Apple','Orange'], yticklabels=['Apple','Orange'])
+plt.ylabel('Prediction',fontsize=13)
+plt.xlabel('Actual',fontsize=13)
+plt.title('Confusion Matrix',fontsize=17)
+plt.show()
