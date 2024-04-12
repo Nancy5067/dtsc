@@ -1,0 +1,18 @@
+import numpy as np
+from sklearn.cluster import AgglomerativeClustering # this clustering is used for hirerchical clustering
+from sklearn.metrics import completeness_score, silhouette_score
+
+data = np.array([[1,1],[5,5],[8,8],[1,0],[5,4],[8,1]])
+
+linkage = 'ward'
+model = AgglomerativeClustering(linkage=linkage,n_clusters=3)
+model.fit(data)
+cluster_label = model.labels_
+s = silhouette_score(data,cluster_label) #positive is good and negative value is bad 
+print("silhouette_score: ",s)
+g = None
+if linkage == 'ward' and g != None:
+    c = completeness_score(g,cluster_label)
+    print("completeness_score: ",c)
+else:
+    print("Not applicable...")
