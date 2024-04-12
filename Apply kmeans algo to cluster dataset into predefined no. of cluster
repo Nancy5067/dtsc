@@ -1,0 +1,24 @@
+import numpy as np
+
+# sample data representating flower location
+data = np.array([[1,2],[1.5,1.8],[5,8],[8,8],[1,0.5],[7,9],[9,10],[5.5,8.5]])
+
+# define the number of cluster
+k = 3
+
+# implementing algo
+from sklearn.cluster import KMeans
+kmean = KMeans(n_clusters=k)
+
+# Traning algo
+kmean.fit(data)
+cluster_label = kmean.predict(data)
+print("Khansa Khan KFMSCIT017")
+# plotting
+import matplotlib.pyplot as plt
+plt.scatter(data[:,0],data[:,1],c=cluster_label)
+plt.xlabel('X Co-ordinates')
+plt.ylabel('Y Co-ordinates')
+plt.title('K Mean Clustering (K = '+str(k)+")")
+plt.show()
+
