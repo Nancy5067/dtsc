@@ -1,0 +1,31 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error,r2_score
+
+df = pd.read_csv(r"C:\Users\Khansa\Downloads\Employee.csv")
+df.head()
+
+x=df['YearsExperience'].values.reshape(-1,1)
+y=df['Salary'].values
+
+X_train,X_test , Y_train , Y_test  = train_test_split(x,y,test_size=0.2)
+
+r1 = LinearRegression()
+r1.fit(X_train,Y_train)
+y_pred = r1.predict(X_test)
+print(y_pred)
+
+MSE = mean_squared_error(Y_test,y_pred)
+r2 = r2_score(Y_test,y_pred)
+print('MSE',MSE)
+print('r2' , r2)
+
+plt.scatter(X_test,Y_test,color='blue',label='Actual')
+plt.plot(X_test,y_pred,color='red',label='Predict')
+plt.xlabel('year of experience')
+plt.ylabel('salary')
+plt.legend()
+plt.show()
