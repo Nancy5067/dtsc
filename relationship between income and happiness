@@ -1,0 +1,27 @@
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+data = pd.read_csv(r"C:\Users\Khansa\Downloads\Book(Sheet1).csv")
+X = data['Income'].values.reshape(-1, 1)  # Independent variable
+y = data['Happiness'].values  # Dependent variable
+model  = LinearRegression()
+model.fit(X,y)
+# Getting model parameters
+slope = model.coef_[0]
+intercept = model.intercept_
+print("Slope:", slope)
+print("Intercept:", intercept)
+# Predicting happiness for given incomes
+income_test = np.array([[25000], [50000], [70000]])
+happiness_pred = model.predict(income_test)
+print("\nPredicted happiness for incomes:")
+for i in range(len(income_test)):
+    print("Income:", income_test[i][0], "Predicted Happiness:", happiness_pred[i])
+# Visualizing the regression line
+plt.scatter(data['Income'], data['Happiness'])
+plt.plot(X, model.predict(X), color='red', linewidth=2)
+plt.xlabel('Income')
+plt.ylabel('Happiness')
+plt.title('Income vs Happiness with Linear Regression')
+plt.show()
