@@ -1,0 +1,31 @@
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, classification_report
+
+document = ["This is a positive document about technologies","negative statements towards politics in this document","A positive review of a new movie release","This document talks about technologies and politics","No specific statement in the genersl document"]
+label = {'technologies':[1,0],'politics':[0,1],'positive_statement':[1,0],'negative_statement':[0,1]}
+
+y = [label['technologies'],label['politics'],label['positive_statement'],label['technologies']+label['politics'],[]]
+
+xtrain,xtest,ytrain,ytest = train_test_split(document,y,test_size=0.2)
+
+v = TfidfVectorizer()
+xtrain_Tfidf = v.fit_transform(xtrain)
+xtest_Tfidf = v.transform(xtest)
+
+from sklearn.preprocessing import MultiLabelBinarizer
+mlb = MultiLabelBinarizer()
+ytrain = mlb.fit_transform(ytrain)
+ytest = mlb.fit_transform(ytest)
+
+model = MultiOutputClassifier(MultinomialNB())
+model.fit(xtrain_Tfidf,ytrain)
+
+ypred = model.predict(xtest_Tfidf)
+
+accuracy = accuracy_score(ytest,ypred)
+cr = classification_report(ytest,ypred)
+print("accuracy_score: ",accuracy)
+print("\nclassification_report: \n",cr)
