@@ -1,0 +1,27 @@
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,recall_score,f1_score,precision_score
+
+# step 1 : load the iris dataset
+
+iris = load_iris()
+x = iris.data
+y = iris.target
+
+xtrain,xtest,ytrain,ytest = train_test_split(x,y,test_size=0.2)
+
+from sklearn.svm import SVC
+model = SVC()
+model.fit(xtrain,ytrain)
+modelPredict = model.predict(xtest)
+
+aS = accuracy_score(modelPredict,ytest)
+f1 = f1_score(modelPredict,ytest,average='macro')
+rs = recall_score(modelPredict,ytest,average='macro')
+ps = precision_score(modelPredict,ytest,average='macro')
+
+print("Khansa Khan KFMSCIT017")
+print("accuracy_score: ",aS)
+print("recall_score: ",rs)
+print("precision_score: ",ps)
+print("f1_score: ",f1)
