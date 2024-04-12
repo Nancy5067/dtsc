@@ -1,0 +1,33 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split,cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+
+data = pd.read_csv(r"C:\Users\Khansa\Downloads\archive (4)\Iris.csv")
+data.head()
+
+
+x = data[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
+y = data['Species']
+
+xtrain,xtest,ytrain,ytest = train_test_split(x,y,test_size=0.2)
+
+Scaler = StandardScaler()
+xtrain = Scaler.fit_transform(xtrain)
+xtest = Scaler.fit_transform(xtest)
+
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier(n_estimators=100,random_state=40)
+model.fit(xtrain,ytrain)
+
+ypred = model.predict(xtest)
+
+cm = confusion_matrix(ytest,ypred)
+cr = classification_report(ytest,ypred)
+print('confusion_matrix:',cm)
+print('\n classification_report:\n',cr)
+
+cvs = cross_val_score(model,x,y,cv=5)
+print('cross_val_score:',cvs)
+print('\nMean:',np.mean(cvs))
