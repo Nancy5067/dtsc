@@ -1,0 +1,34 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import MultinomialNB, CategoricalNB
+from sklearn.metrics import classification_report,accuracy_score,confusion_matrix
+iris =pd.read_csv(r"C:\Users\Khansa\Downloads\archive (4)\Iris.csv")
+
+#selecting features from which we are going to train the model
+#selecting all values of 'SepalLengthCm', 'SepalWidth'
+x= iris.iloc[:,[1,2,3,4]].values
+
+#selecting all values from species
+y =iris.iloc[:,5].values
+x_train,x_test, y_train,y_test =train_test_split(x,y, test_size = 0.2, random_state=42)
+#MUultinominal Naive Bayes
+
+
+print("********* For Multinomial  Naive Bayes Classification **********\n")
+
+#storing model in avriable
+MNBclf = MultinomialNB()
+#training model with training data
+MNBclf.fit(x_train, y_train)
+
+#Predicting model
+y_pred=MNBclf.predict(x_test)
+
+out =MNBclf.predict([[5.9,3.0,5.1,1.8]])
+print("*******Predict Species***********",out)
+print("\n")
+print("Accuracuy score \n ",accuracy_score(y_test, y_pred))
+print("Classification report\n ",classification_report(y_test, y_pred))
