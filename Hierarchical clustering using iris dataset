@@ -1,0 +1,15 @@
+#heirrchaicalclsutering
+import numpy as np 
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics import silhouette_score ,  completeness_score 
+from sklearn.datasets import load_iris
+iris =  load_iris()
+data= iris.data
+target = iris.target
+linkage = 'average'
+model =  AgglomerativeClustering(n_clusters=3,linkage=linkage)
+model.fit(data)
+cluster_label= model.labels_
+s= silhouette_score(data,cluster_label)
+c=completeness_score(target,cluster_label)
+print("Silhouette Score: ",s, "\nCompletness:",c)
